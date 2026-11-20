@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="pl">
+  <head>
+    <title>Wspólne Domy – Detektor dojrzałości banana</title>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Barlow:500,700,800&subset=latin-ext,cyrillic"
+    />
+    <link rel="stylesheet" href="./css/reset.css" />
+    <link rel="stylesheet" href="./css/style.css" />
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.3.1/dist/tf.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@0.8/dist/teachablemachine-image.min.js"></script>
+    <script type="module" src="./js/model-runner.js"></script>
+    <script type="module" src="./js/bar-graph.js"></script>
+  </head>
+  <body>
+    <header id="topbar">
+      <div id="brand">
+        <span class="brand-main" data-i18n="brand_main">WSPÓLNE DOMY</span>
+        <span class="brand-sub" data-i18n="brand_sub">СПІЛЬНІ ДОМІВКИ</span>
+      </div>
+      <div id="lang-switch" role="group" aria-label="Language">
+        <button type="button" data-lang="pl" class="active">PL</button>
+        <button type="button" data-lang="uk">UA</button>
+      </div>
+    </header>
+
+    <main id="layout">
+      <aside class="side" id="side-left">
+        <div class="card" id="info-poster">
+          <img id="ud-poster" src="./foto/wspolne_domy.png" alt="Wspólne Domy / Спільні домівки" />
+        </div>
+      </aside>
+
+      <section id="model">
+        <h1 data-i18n="title">Pokaż banana do kamery</h1>
+        <div id="webcam-wrapper">
+          <img id="ud-banan_back" src="./foto/banan.gif" alt="" />
+          <div class="loader"></div>
+        </div>
+        <div id="graph">
+          <div id="graph-wrapper"></div>
+        </div>
+      </section>
+
+      <aside class="side" id="side-right">
+        <div class="card" id="result_none">
+          <h2 data-i18n="detector">Detektor dojrzałości banana</h2>
+          <img id="ud-banan" src="./foto/banane.png" alt="" />
+        </div>
+      </aside>
+    </main>
+
+    <footer>
+      <a target="_blank" rel="noopener" href="https://ethnomuseum.pl/wydarzenia-lista/familijne-warsztaty-miasto-wspolne/" data-i18n="event">Familijne warsztaty „Miasto wspólne”</a>
+      <a target="_blank" href="https://kyrylozharkovskyi.wordpress.com/">
+        <img id="author" src="./foto/Kyrylo.jpg" alt="Kyrylo Zharkovskyi" />
+      </a>
+    </footer>
+
+    <script type="module">
+      import { setupModel } from "./js/model-runner.js";
+      import { setupBarGraph, updateBarGraph } from "./js/bar-graph.js";
+      import { initI18n } from "./js/i18n.js";
+
+      let URL = 'https://teachablemachine.withgoogle.com/models/LTVR1GMB1/'
+
+      initI18n();
+      setupBarGraph(URL);
+      setupModel(URL, (data) => {
+        updateBarGraph(data);
+      });
+    </script>
+  </body>
+</html>
